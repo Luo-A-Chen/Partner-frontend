@@ -1,16 +1,36 @@
 <script setup lang="ts">
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
+import myAxios from "../plugins/myAxios.ts";
+import {getCurrentUser} from "../services/user.ts";
 
 //获取跳转路由
+const router=useRouter();
 const route=useRoute();
+//获取当前用户
 const editUser=ref({
   editKey:route.query.editKey,//对应字段
   editName:route.query.editName,//提示输入内容
   currentValue:route.query.currentValue,//当前昵称
 })
-const onSubmit = (values) => {
-  console.log('submit', values);
+
+const onSubmit = async() => {
+  const currentUser=await getCurrentUser();
+  if(!currentUser){
+    console.log('用户未登录');
+    return;
+  }
+  const res=await myAxios.post('/user/update',{
+    'id':currentUser.id,
+    [editUser.value.editKey as string]:editUser.value.currentValue,
+  })
+  if(res.data.code===0){
+    console.log('更新成功');
+    router.back();
+  }else{
+    console.log('更新失败');
+    router.back();
+  }
 };
 </script>
 

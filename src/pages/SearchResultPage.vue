@@ -2,12 +2,12 @@
 import {useRoute} from "vue-router";
 import {onMounted, ref} from "vue";
 import myAxios from "../plugins/myAxios.ts";
-// import {Toast} from "vant";
 import qs from 'qs';
 
 
 const route = useRoute();
 const userList=ref([]);
+const {tags} = route.query;
 onMounted(async() => {
   const userListData=await myAxios.get('/user/search/tags',{
     params:{
@@ -18,19 +18,15 @@ onMounted(async() => {
     }
   })
   .then(function (response){
-    console.log('/user/search/tags succeed',response);
-    // Toast.success('搜索成功');
     return response.data?.data;
   })
   .catch(function (error) {
-    console.log('/user/search/tags error',error);
-    // Toast.fail('搜索失败');
+    console.log(error);
   })
   if(userListData){
     userList.value=userListData;
   }
 })
-const {tags}=route.query;
 </script>
 
 <template>

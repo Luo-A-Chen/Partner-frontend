@@ -2,13 +2,13 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 //引入路由
-import { createMemoryHistory, createRouter } from 'vue-router';
+import { createWebHistory, createRouter } from 'vue-router';
 import routes from "./config/route.ts";
 //创建主页面App
 const app=createApp(App)
 //创建路由
 const router = createRouter({
-    history: createMemoryHistory(),
+    history: createWebHistory(),
     routes,
 })
 //挂载路由

@@ -23,8 +23,8 @@ const onChange = (index) => showToast(`标签 ${index}`);
     </template>
   </van-nav-bar>
 <!--在这个页面的基础上渲染其他页面的组件，通过路由展示-->
-  <div>
-    <router-view></router-view>
+  <div id="content">
+    <router-view/>
   </div>
   <van-tabbar route @change="onChange">
     <van-tabbar-item to="/" icon="home-o" name="index">主页</van-tabbar-item>
@@ -34,4 +34,7 @@ const onChange = (index) => showToast(`标签 ${index}`);
 </template>
 
 <style scoped>
+#content{
+  padding-bottom: 50px;
+}
 </style>
